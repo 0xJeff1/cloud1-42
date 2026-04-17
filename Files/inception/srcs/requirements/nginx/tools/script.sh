@@ -52,14 +52,15 @@ server {
         fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
     }
 
-    location /phpmyadmin/ {
-    rewrite ^/phpmyadmin(/.*)$ $1 break;
-    proxy_pass http://phpmyadmin:80/;
-
-    proxy_set_header Host $host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-}
+    location ^~ /phpmyadmin/ {
+        proxy_pass http://phpmyadmin:80/;
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
+        proxy_redirect off;
+        proxy_buffering off;
+    }
 }
 EOF
 }
