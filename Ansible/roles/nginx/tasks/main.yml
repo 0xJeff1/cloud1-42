@@ -1,0 +1,10 @@
+---
+- name: Start (or update) Nginx with docker-compose
+  shell:
+    cmd: |
+      if command -v docker-compose >/dev/null 2>&1; then
+        docker-compose -f srcs/docker-compose.yml up -d --build nginx
+      else
+        docker compose -f srcs/docker-compose.yml up -d --build nginx
+      fi
+    chdir: /opt/inception

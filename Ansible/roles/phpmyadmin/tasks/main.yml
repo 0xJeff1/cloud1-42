@@ -1,0 +1,10 @@
+---
+- name: Start (or update) phpMyAdmin with docker-compose
+  shell:
+    cmd: |
+      if command -v docker-compose >/dev/null 2>&1; then
+        docker-compose -f srcs/docker-compose.yml up -d --build phpmyadmin
+      else
+        docker compose -f srcs/docker-compose.yml up -d --build phpmyadmin
+      fi
+    chdir: /opt/inception

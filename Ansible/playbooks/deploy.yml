@@ -1,0 +1,9 @@
+- hosts: cloud
+  become: yes
+  roles:
+  - docker
+  - inception_files
+  - mariadb
+  - wordpress
+  - phpmyadmin
+  - nginx

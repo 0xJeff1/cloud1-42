@@ -1,0 +1,9 @@
+---
+- name: Copy Inception srcs (docker-compose and service definitions)
+  copy:
+    src: ../../Files/inception/srcs/
+    dest: /opt/inception/srcs/
+    owner: root
+    group: root
+    mode: '0755'
+    recurse: yes

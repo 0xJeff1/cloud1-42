@@ -1,0 +1,24 @@
+- name: Copy Inception project
+  copy:
+    src: ../../Files/inception/
+    dest: /opt/inception/
+
+- name: Ensure bind mount directories exist
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0755"
+  loop:
+    - /opt/inception/data/wordpress
+    - /opt/inception/data/mariadb
+
+- name: Run docker-compose
+  shell:
+    cmd: |
+      if command -v docker-compose >/dev/null 2>&1; then
+        docker-compose -f srcs/docker-compose.yml up -d --build
+      else
+        docker compose -f srcs/docker-compose.yml up -d --build
+      fi
+    chdir: /opt/inception
+    # warn intentionally omitted to maximize compatibility across Ansible versions

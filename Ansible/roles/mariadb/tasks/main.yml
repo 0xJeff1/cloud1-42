@@ -1,0 +1,16 @@
+---
+- name: Ensure bind mount directory exists for MariaDB
+  file:
+    path: /opt/inception/data/mariadb
+    state: directory
+    mode: "0755"
+
+- name: Start (or update) MariaDB with docker-compose
+  shell:
+    cmd: |
+      if command -v docker-compose >/dev/null 2>&1; then
+        docker-compose -f srcs/docker-compose.yml up -d --build mariadb
+      else
+        docker compose -f srcs/docker-compose.yml up -d --build mariadb
+      fi
+    chdir: /opt/inception
